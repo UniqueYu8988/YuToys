@@ -38,16 +38,12 @@ body {
 
 /* 顶栏控制 */
 .title-bar {
-  height: 44px;
+  flex: 0 0 44px; /* 固定高度，参与 Flex 排版 (V1.4.8) */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
   -webkit-app-region: drag;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   z-index: 100;
   opacity: 0;
   transition: opacity 0.3s;
@@ -82,17 +78,13 @@ body {
 
 /* 底部导航 */
 .bottom-nav {
-  height: 64px;
+  flex: 0 0 64px; /* 固定高度，参与 Flex 排版 (V1.4.8) */
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid var(--glass-border);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   z-index: 90;
@@ -113,20 +105,64 @@ body {
 
 /* 内容区 */
 .content {
-  flex: 1;
-  padding: 56px 16px 76px; /* 进一步微调内边距，确保长列表视觉呼吸感 */
+  flex: 1; /* 自动填充中间区域 (V1.4.8) */
+  width: 100%;
+  padding: 0 0 20px; /* 内容自身的小间距 */
   overflow-y: auto;
   scrollbar-width: none;
+  box-sizing: border-box;
 }
 .content::-webkit-scrollbar { display: none; }
 
 .page {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 16px; 
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
-/* 任务列表 */
+/* 专注与饮水板块垂直对齐优化 */
+.page.center-layout {
+  justify-content: center;
+  align-items: center;
+}
+
+/* 跑马灯重构 (V1.4.4 迁移至 Framer Motion 驱动) */
+.marquee-container {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  white-space: nowrap;
+}
+
+.task-list-viewport {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+  /* 隐藏默认滚动条但允许滑动 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.task-list-viewport::-webkit-scrollbar {
+  width: 4px;
+}
+
+.task-list-viewport::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.task-list-viewport::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 .task-item {
   display: flex;
   align-items: center;

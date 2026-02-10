@@ -7,37 +7,7 @@ import successSound from '../assets/sounds/success.mp3'
 const Timer: React.FC = () => {
   const { timeLeft, isActive, setIsActive, setTimeLeft, configFocusMinutes } = useTaskStore()
 
-  useEffect(() => {
-    if (timeLeft === 0 && isActive) {
-      setIsActive(false)
-      
-      // 播放本地成功的音效 (离线可用)
-      const audio = new Audio(successSound)
-      audio.play().catch(e => console.error('Audio play failed', e))
-
-      window.electronAPI?.showNotification({ 
-        title: 'YuToys 专注结束', 
-        body: `${configFocusMinutes} 分钟专注已完成，休息一下吧！` 
-      })
-      
-      const duration = 3 * 1000
-      const end = Date.now() + duration
-
-      const frame = () => {
-        confetti({
-          particleCount: 3,
-          angle: 90,
-          spread: 55,
-          origin: { x: 0.5, y: 1 },
-          colors: ['#a855f7', '#6366f1', '#ffffff']
-        })
-        if (Date.now() < end) requestAnimationFrame(frame)
-      }
-      frame()
-
-      setTimeLeft(configFocusMinutes * 60)
-    }
-  }, [timeLeft, isActive, setIsActive, setTimeLeft, configFocusMinutes])
+  // 逻辑已提升至 App.tsx 进行全局监听，此处仅负责视觉展示
 
   const radius = 80
   const circumference = 2 * Math.PI * radius
@@ -45,8 +15,8 @@ const Timer: React.FC = () => {
 
   return (
     <motion.div 
-      className="page" 
-      style={{ alignItems: 'center', justifyContent: 'center' }}
+      className="page center-layout" 
+      style={{ alignItems: 'center' }}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}

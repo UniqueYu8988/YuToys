@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Shield, Bell, Monitor, RefreshCcw, PlayCircle, Heart, MessageCircle, Clock } from 'lucide-react'
+import { Shield, Bell, Monitor, RefreshCcw, PlayCircle, Heart, MessageCircle, Clock, Github } from 'lucide-react'
 import { PreviewContext } from '../context/PreviewContext'
 import alipayImg from '../assets/alipay.jpg'
 import qqImg from '../assets/qq.png'
@@ -13,6 +13,8 @@ const SettingsPage: React.FC = () => {
   const [alwaysOnTop, setAlwaysOnTop] = useState(() => JSON.parse(localStorage.getItem('setting_alwaysOnTop') || 'true'))
   const [autoStart, setAutoStart] = useState(() => JSON.parse(localStorage.getItem('setting_autoStart') || 'false'))
   const [hourlyChime, setHourlyChime] = useState(() => JSON.parse(localStorage.getItem('setting_hourlyChime') || 'true'))
+  const [skipTaskbar, setSkipTaskbar] = useState(() => JSON.parse(localStorage.getItem('setting_skipTaskbar') || 'false'))
+  const [tickingSound, setTickingSound] = useState(() => JSON.parse(localStorage.getItem('setting_tickingSound') || 'false'))
   const [resetStep, setResetStep] = useState(0)
 
   const toggleOnTop = () => {
@@ -33,6 +35,19 @@ const SettingsPage: React.FC = () => {
     const newVal = !hourlyChime
     setHourlyChime(newVal)
     localStorage.setItem('setting_hourlyChime', JSON.stringify(newVal))
+  }
+
+  const toggleSkipTaskbar = () => {
+    const newVal = !skipTaskbar
+    setSkipTaskbar(newVal)
+    localStorage.setItem('setting_skipTaskbar', JSON.stringify(newVal))
+    window.electronAPI?.setSkipTaskbar(newVal)
+  }
+
+  const toggleTicking = () => {
+    const newVal = !tickingSound
+    setTickingSound(newVal)
+    localStorage.setItem('setting_tickingSound', JSON.stringify(newVal))
   }
 
   const testHourly = () => {
@@ -65,8 +80,8 @@ const SettingsPage: React.FC = () => {
   )
 
   return (
-    <div className="page" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <div className="page">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <SettingItem icon={<Shield size={18} color="#a855f7"/>} label="窗口置顶">
           <div className={`native-toggle ${alwaysOnTop ? 'on' : ''}`} onClick={toggleOnTop}><div className="thumb"/></div>
         </SettingItem>
@@ -77,6 +92,14 @@ const SettingsPage: React.FC = () => {
 
         <SettingItem icon={<Bell size={18} color="#6366f1"/>} label="整点报时">
           <div className={`native-toggle ${hourlyChime ? 'on' : ''}`} onClick={toggleHourly}><div className="thumb"/></div>
+        </SettingItem>
+
+        <SettingItem icon={<Monitor size={18} color="#f59e0b"/>} label="任务栏图标">
+          <div className={`native-toggle ${!skipTaskbar ? 'on' : ''}`} onClick={toggleSkipTaskbar}><div className="thumb"/></div>
+        </SettingItem>
+
+        <SettingItem icon={<Clock size={18} color="#ec4899"/>} label="时钟滴答">
+          <div className={`native-toggle ${tickingSound ? 'on' : ''}`} onClick={toggleTicking}><div className="thumb"/></div>
         </SettingItem>
 
         <SettingItem icon={<Clock size={18} color="#10b981"/>} label="计时设置">
@@ -101,6 +124,10 @@ const SettingsPage: React.FC = () => {
 
         <SettingItem icon={<Heart size={18} color="#f43f5e"/>} label="赞助支持">
           <button className="text-action-btn" onClick={() => setPreview(alipayImg)}>支持</button>
+        </SettingItem>
+
+        <SettingItem icon={<Github size={18} color="#fff"/>} label="开源项目">
+          <button className="text-action-btn" onClick={() => window.electronAPI?.openExternal('https://github.com/UniqueYu8988/YuToys')}>Star</button>
         </SettingItem>
       </div>
 
@@ -127,6 +154,8 @@ const SettingsPage: React.FC = () => {
           </button>
         </div>
       </div>
+      {/* 底部安全占位符 (V1.4.7) */}
+      <div style={{ height: 40, flexShrink: 0 }} />
     </div>
   )
 }

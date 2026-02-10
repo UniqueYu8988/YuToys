@@ -51,13 +51,19 @@ const TaskList: React.FC = () => {
         {/* 彻底移除添加按钮，回车即可添加 */}
       </form>
 
-      <div style={{ flex: 1 }}>
-        <AnimatePresence mode="popLayout">
-          {activeTasks.map(task => (
+      <div className="task-list-viewport">
+        <AnimatePresence>
+          {activeTasks.map((task, index) => (
             <motion.div 
               key={task.id} 
-              layout 
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.1, 
+                ease: "easeOut"
+              }}
               className="task-item"
             >
               <button className="toggle-btn" onClick={e => handleToggle(task.id, task.completed, e)}>
@@ -75,7 +81,7 @@ const TaskList: React.FC = () => {
               ) : (
                 <span className="task-text" onDoubleClick={() => { setEditingId(task.id); setEditValue(task.text); }}>{task.text}</span>
               )}
-              {editingId === task.id && <Trash2 size={16} color="#ef4444" onClick={() => deleteTask(task.id)} style={{ cursor: 'pointer' }}/>}
+              {editingId === task.id && <Trash2 size={16} color="#ef4444" onMouseDown={(e) => { e.preventDefault(); deleteTask(task.id); }} style={{ cursor: 'pointer' }}/>}
             </motion.div>
           ))}
         </AnimatePresence>

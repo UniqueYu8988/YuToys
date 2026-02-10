@@ -27,12 +27,14 @@ const Reminders: React.FC = () => {
   }, [waterCups])
 
   return (
-    <div className="page" style={{ alignItems: 'center', justifyContent: 'center', gap: 40, height: '100%' }}>
-      <div className="cup-wrapper">
-        <motion.div className="water-fill" initial={{ height: 0 }} animate={{ height: `${level}%` }} />
+    <div className="page center-layout" style={{ alignItems: 'center' }}>
+      <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="cup-wrapper">
+          <motion.div className="water-fill" initial={{ height: 0 }} animate={{ height: `${level}%` }} />
+        </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
         <AnimatePresence mode="wait">
           {waterCups < 6 ? (
             <motion.button 

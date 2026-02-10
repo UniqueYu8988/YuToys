@@ -110,7 +110,7 @@ if (!gotTheLock) {
       resizable: false,
       show: false,
       autoHideMenuBar: true,
-      skipTaskbar: true,
+      skipTaskbar: false,
       backgroundColor: '#00000000',
       webPreferences: {
         nodeIntegration: false,
@@ -158,9 +158,11 @@ if (!gotTheLock) {
   })
 
   ipcMain.on('show-notification', (event, { title, body }) => {
+    const iconPath = getResourcePath('icon.ico')
     new Notification({ 
       title: title || APP_NAME, 
       body, 
+      icon: fs.existsSync(iconPath) ? iconPath : undefined,
       silent: true 
     }).show()
   })
@@ -173,5 +175,13 @@ if (!gotTheLock) {
         path: app.getPath('exe'),
       })
     }
+  })
+
+  ipcMain.on('set-skip-taskbar', (event, flag) => {
+    if (mainWindow) mainWindow.setSkipTaskbar(flag)
+  })
+
+  ipcMain.on('open-external', (event, url) => {
+    import('electron').then(({ shell }) => shell.openExternal(url))
   })
 }
