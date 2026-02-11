@@ -1,4 +1,4 @@
-# 📦 YuToys V1.6.1 发布指南 (Perfect Release)
+# 📦 YuToys V2.0.0 发布指南 (Perfect Release)
 
 主人，这份指南将辅助您完成“小羽桌面助理”的完美发布，确保交付给其他使用者的是一个纯净、高效且充满仪式感的版本。
 
@@ -27,16 +27,23 @@ npm run build
 
 在 GitHub 仓库页面点击 **“Create a new release”**，建议按如下规格填写：
 
-- **Tag version**: `v1.6.1`
-- **Release title**: `小羽桌面助理 V1.6.1 - 完美仪式感版`
+- **Tag version**: `v2.0.0`
+- **Release title**: `小羽桌面助理 V2.0.0 - 完美结项版`
 - **Description**: 直接粘贴我们新写的 [README.md](./README.md) 中的特色巡礼内容。
-- **Assets**: 上传打包出的 `.exe` 或 `.zip` 压缩包。
+- **Assets**: 上传打包出的 `YuToys 2.0.0.exe` 压缩包。
+
+## 4. 特别说明：开机自启 (Portable 版专用)
+
+由于这一版是 **Portable (便携版)** EXE，用户在点击设置里的“开机自启”前，请务必先将软件放在一个 **固定的文件夹**（如 `D:\Assistant\YuToys.exe`）内。
+
+- **逻辑**：一旦开启，系统就会记住这个文件的位置。如果用户之后随意挪动文件，自启就会失效喵。
+- **已优化**：代码已适配原始路径识别，只要文件不搬家，自启绝对稳健。
 
 ## 4. 交付清单
 
 一个完美的发布包应包含：
 
-1.  **YuToys Setup 1.6.1.exe** (安装版) 或 **YuToys-win32-x64** (绿色免安装文件夹)
+1.  **YuToys 2.0.0.exe** (便携版)
 2.  一份精美的 **README.md** (引导使用者通过小羽开启新的一天)
 
 ---

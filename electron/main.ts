@@ -170,9 +170,11 @@ if (!gotTheLock) {
   ipcMain.on('set-auto-start', (event, flag) => {
     // 只有在打包环境下才执行真实的快捷启动设置，避免 dev 环境干扰系统列表
     if (app.isPackaged) {
+      // 解决 Portable 引导失效：优先使用原始 EXE 路径，否则指向临时目录会导致重启后找不到文件
+      const exePath = process.env.PORTABLE_EXECUTABLE_FILE || app.getPath('exe')
       app.setLoginItemSettings({
         openAtLogin: flag,
-        path: app.getPath('exe'),
+        path: exePath,
       })
     }
   })
