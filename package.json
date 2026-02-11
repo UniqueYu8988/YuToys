@@ -1,8 +1,8 @@
 {
   "name": "yutoys",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "main": "dist-electron/main.js",
-  "description": "YuToys - 极致视觉桌面助手",
+  "description": "YuToys - 小羽桌面助理",
   "author": "Yu",
   "license": "ISC",
   "scripts": {

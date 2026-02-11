@@ -27,5 +27,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
-tsc_errors.txt
+*.txt
+*.log
+*.bat
 window-state.json
