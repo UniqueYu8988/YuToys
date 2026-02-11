@@ -12,15 +12,15 @@
 ## 📽️ 视觉巡礼 (Visual Tour)
 
 ```carousel
-![仪式感启动](./public/demo/启动.gif)
+![仪式感启动](./public/demo/splash.gif)
 <!-- slide -->
-![沉浸式专注](./public/demo/专注完成.gif)
+![沉浸式专注](./public/demo/focus_celebration.gif)
 <!-- slide -->
-![灵动任务列表](./public/demo/任务完成.gif)
+![灵动任务列表](./public/demo/task_done.gif)
 <!-- slide -->
-![小羽温情互动](./public/demo/统计和对话.gif)
+![小羽温情互动](./public/demo/stats_chat.gif)
 <!-- slide -->
-![新春好运抽签](./public/demo/测运势.gif)
+![新春好运抽签](./public/demo/fortune.gif)
 ```
 
 ---
@@ -30,32 +30,32 @@
 ### 🎬 仪式感入场：小羽启动动画
 
 每一次开启，都是一次庄重的会面。小羽专属的 **SplashScreen** 采用电影级呼吸灯效，在紫色星尘中为您拉开高效一天的序幕。
-![启动演示](./public/demo/启动.gif)
+![启动演示](./public/demo/splash.gif)
 
 ### ⏳ 沉浸式专注空间 (Deep Focus)
 
 - **成就庆典**：每当您完成一次专注，全屏烟花礼赞将为您绽放。
 - **动态呼吸**：可视化倒计时圆环，陪伴您劳逸结合。
-  ![专注演示](./public/demo/专注完成.gif)
+  ![专注演示](./public/demo/focus_celebration.gif)
 
 ### 📝 灵动任务管理 (Staggered Tasks)
 
 - **无感交互**：阶梯式淡入动效，双击即修，失焦即存。
 - **及时反馈**：小礼花点缀任务达成的瞬间。
-  ![任务记录与修改](./public/demo/记录和修改.gif)
+  ![任务记录与修改](./public/demo/task_edit.gif)
 
 ### 📊 呵护提醒与全量统计 (Assistant & Stats)
 
 - **小羽呵护**：
-  - **整点报时**：温馨提醒时光流逝。 ![报时](./public/demo/报时测试.gif)
-  - **饮水养成**：关爱主人的身体。 ![饮水](./public/demo/饮水任务.gif)
+  - **整点报时**：温馨提醒时光流逝。 ![报时](./public/demo/chime_test.gif)
+  - **饮水养成**：关爱主人的身体。 ![饮水](./public/demo/water_reminder.gif)
 - **极致统计**：四维看板实时记录成长点滴。
-  ![统计看板](./public/demo/统计和对话.gif)
+  ![统计看板](./public/demo/stats_chat.gif)
 
 ### 🧧 新春特供：喵系测运势
 
 集成在设置面板中的“新春签筒”，每天可向小羽抽取一次今日运势。结果均为上上签/大吉等吉祥语，为主人带去整天的好运喵！
-![抽签演示](./public/demo/测运势.gif)
+![抽签演示](./public/demo/fortune.gif)
 
 ---
 
