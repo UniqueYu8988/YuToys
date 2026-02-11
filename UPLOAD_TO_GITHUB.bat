@@ -40,8 +40,12 @@ if "%msg%"=="" set msg="YuToys V1.6.1 - 小羽桌面助理完善版"
 echo [进程] 正在盖章: %msg%
 git commit -m %msg%
 
-echo [进程] 正在穿越传送门上传至 GitHub (这可能需要一点时间喵)...
-git push
+:: 获取当前分支名称
+for /f "tokens=*" %%i in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%i
+
+echo [进程] 正在穿越传送门上传至 GitHub (目标分支: %BRANCH% 喵)...
+:: 增加 -u 参数以自动设置上游绑定
+git push -u origin %BRANCH%
 
 if %errorlevel% equ 0 (
     echo.
