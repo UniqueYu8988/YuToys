@@ -44,6 +44,19 @@ git commit -m %msg%
 for /f "tokens=*" %%i in ('git rev-parse --abbrev-ref HEAD') do set BRANCH=%%i
 
 echo [进程] 正在穿越传送门上传至 GitHub (目标分支: %BRANCH% 喵)...
+
+:: 先拉取远程变更（防止远程比本地新，例如在网页端创建了 License）
+echo [进程] 正在检查远程是否有新包裹...
+git pull --rebase origin %BRANCH%
+
+if %errorlevel% neq 0 (
+    echo.
+    echo [警报] 发现包裹冲突喵！请手动检查是否有相同文件被改动了。
+    echo [提示] 如果您只是想强制覆盖远程，可以尝试联系小羽寻找“强力胶”指令。
+    pause
+    exit /b
+)
+
 :: 增加 -u 参数以自动设置上游绑定
 git push -u origin %BRANCH%
 
