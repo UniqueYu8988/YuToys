@@ -25,6 +25,8 @@ interface TaskState extends TimerState {
   waterIntake: number
   waterCups: number
   totalRunMinutes: number
+  lastFortuneDate?: string // 上次抽签日期 (V1.5.1)
+  lastFortuneResult?: string // 上次抽签结果
   addTask: (text: string) => void
   toggleTask: (id: string) => void
   updateTask: (id: string, text: string) => void
@@ -33,6 +35,7 @@ interface TaskState extends TimerState {
   addWater: () => void
   markAllCleared: () => void
   addRunTime: (minutes: number) => void
+  setFortune: (result: string) => void // 更新运势 Action
 }
 
 export const useTaskStore = create<TaskState>()(
@@ -90,7 +93,11 @@ export const useTaskStore = create<TaskState>()(
           waterIntake: (state.waterIntake || 0) + 250 
         }
       }),
-      markAllCleared: () => set((state) => ({ tasks: state.tasks.filter(t => !t.completed) }))
+      markAllCleared: () => set((state) => ({ tasks: state.tasks.filter(t => !t.completed) })),
+      setFortune: (result) => set({ 
+        lastFortuneResult: result, 
+        lastFortuneDate: new Date().toISOString().split('T')[0] 
+      })
     }),
     {
       name: 'yutoys-storage-v5'

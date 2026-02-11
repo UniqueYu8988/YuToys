@@ -24,16 +24,23 @@ declare global {
   }
 }
 
-const TaskList = React.lazy(() => import('./components/TaskList'))
-const Timer = React.lazy(() => import('./components/Timer'))
-const Reminders = React.lazy(() => import('./components/Reminders'))
-const Stats = React.lazy(() => import('./components/Stats'))
-const SettingsPage = React.lazy(() => import('./components/Settings'))
+import TaskList from './components/TaskList'
+import Timer from './components/Timer'
+import Reminders from './components/Reminders'
+import Stats from './components/Stats'
+import SettingsPage from './components/Settings'
+import SplashScreen from './components/SplashScreen'
 
 function App() {
   const [activeTab, setActiveTab] = useState('home')
   const [previewSrc, setPreviewSrc] = useState<string | null>(null)
+  const [showSplash, setShowSplash] = useState(true)
   
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2500)
+    return () => clearTimeout(timer)
+  }, [])
+
   const { timeLeft, isActive, setIsActive, setTimeLeft, configFocusMinutes, totalRunMinutes } = useTaskStore()
   const tick = useTaskStore(state => state.tick)
   const addRunTime = useTaskStore(state => state.addRunTime)
@@ -94,7 +101,7 @@ function App() {
         if (nextTotal > 0 && nextTotal % 60 === 0) {
           window.electronAPI?.showNotification({ 
             title: 'YuToys 呵护提醒', 
-            body: `您已持续工作 ${nextTotal/60} 小时，喝杯水放松一下吧 💧` 
+            body: `主人已经持续努力 ${nextTotal/60} 小时了喵，快喝杯温水休息一下吧 💧` 
           })
         }
       }
@@ -106,7 +113,10 @@ function App() {
         const timeStr = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false })
         chimeAudio.currentTime = 0
         chimeAudio.play().catch(e => console.error('Audio fail', e))
-        window.electronAPI?.showNotification({ title: 'YuToys 整点报时', body: `现在是 ${timeStr}` })
+        window.electronAPI?.showNotification({ 
+          title: 'YuToys 整点报时', 
+          body: `主人，现在是 ${timeStr} 喵，辛苦了~` 
+        })
       }
     }, 1000)
 
@@ -122,7 +132,7 @@ function App() {
       
       window.electronAPI?.showNotification({ 
         title: 'YuToys 专注结束', 
-        body: `${configFocusMinutes} 分钟专注已完成，休息一下吧！` 
+        body: `太棒了！主人完成了 ${configFocusMinutes} 分钟的专注喵，快让小羽抱抱 💜` 
       })
 
       // 全局烟花礼赞
@@ -140,79 +150,89 @@ function App() {
 
   return (
     <PreviewContext.Provider value={setPreviewSrc}>
-      <div className="container">
-        <header className="title-bar">
-          <span style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.5 }}>YuToys</span>
-          <div className="window-controls">
-            <button onClick={() => window.electronAPI?.minimize()}>-</button>
-            <button onClick={() => window.electronAPI?.close()}>×</button>
-          </div>
-        </header>
-        
-        <main className="content">
-          <AnimatePresence>
-            <motion.div 
-              key={activeTab}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.1 }}
-              style={{ 
-                height: '100%', 
-                display: 'flex', 
-                flexDirection: 'column' 
-              }}
-            >
-              <React.Suspense fallback={<div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.2 }}>...</div>}>
-                {activeTab === 'home' && <TaskList />}
-                {activeTab === 'timer' && <Timer />}
-                {activeTab === 'remind' && <Reminders />}
-                {activeTab === 'stats' && <Stats />}
-                {activeTab === 'settings' && <SettingsPage />}
-              </React.Suspense>
-            </motion.div>
-          </AnimatePresence>
-        </main>
+      <AnimatePresence mode="wait">
+        {showSplash ? (
+          <SplashScreen key="splash" />
+        ) : (
+          <motion.div 
+            key="main-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="container"
+          >
+            <header className="title-bar">
+              <span style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.5 }}>YuToys</span>
+              <div className="window-controls">
+                <button onClick={() => window.electronAPI?.minimize()}>-</button>
+                <button onClick={() => window.electronAPI?.close()}>×</button>
+              </div>
+            </header>
+            
+            <main className="content">
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={activeTab}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.1 }}
+                  style={{ 
+                    height: '100%', 
+                    display: 'flex', 
+                    flexDirection: 'column' 
+                  }}
+                >
+                    {activeTab === 'home' && <TaskList />}
+                    {activeTab === 'timer' && <Timer />}
+                    {activeTab === 'remind' && <Reminders />}
+                    {activeTab === 'stats' && <Stats />}
+                    {activeTab === 'settings' && <SettingsPage />}
+                </motion.div>
+              </AnimatePresence>
+            </main>
 
-        <nav className="bottom-nav">
-          {[
-            { id: 'home', icon: <CheckCircle2 size={24} /> },
-            { id: 'timer', icon: <Clock size={24} /> },
-            { id: 'remind', icon: <Droplets size={24} /> },
-            { id: 'stats', icon: <BarChart3 size={24} /> },
-            { id: 'settings', icon: <SettingsIcon size={24} /> },
-          ].map(tab => (
-            <button 
-              key={tab.id}
-              className={activeTab === tab.id ? 'active' : ''} 
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.icon}
-            </button>
-          ))}
-        </nav>
+            <nav className="bottom-nav">
+              {[
+                { id: 'home', icon: <CheckCircle2 size={24} /> },
+                { id: 'timer', icon: <Clock size={24} /> },
+                { id: 'remind', icon: <Droplets size={24} /> },
+                { id: 'stats', icon: <BarChart3 size={24} /> },
+                { id: 'settings', icon: <SettingsIcon size={24} /> },
+              ].map(tab => (
+                <button 
+                  key={tab.id}
+                  className={activeTab === tab.id ? 'active' : ''} 
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {tab.icon}
+                </button>
+              ))}
+            </nav>
 
-        <AnimatePresence>
-          {previewSrc && (
-            <motion.div 
-              className="image-overlay"
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              onClick={() => setPreviewSrc(null)}
-            >
-              <motion.img 
-                src={previewSrc} 
-                initial={{ scale: 0.8, y: 20 }} 
-                animate={{ scale: 1, y: 0 }} 
-                exit={{ scale: 0.8, y: 20 }}
-                style={{ maxWidth: '85%', maxHeight: '85%', borderRadius: 20, boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <p style={{ marginTop: 20, fontSize: '0.8rem', opacity: 0.6 }}>点击任意位置关闭</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+            <AnimatePresence>
+              {previewSrc && (
+                <motion.div 
+                  className="image-overlay"
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  exit={{ opacity: 0 }}
+                  onClick={() => setPreviewSrc(null)}
+                >
+                  <motion.img 
+                    src={previewSrc} 
+                    initial={{ scale: 0.8, y: 20 }} 
+                    animate={{ scale: 1, y: 0 }} 
+                    exit={{ scale: 0.8, y: 20 }}
+                    style={{ maxWidth: '85%', maxHeight: '85%', borderRadius: 20, boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <p style={{ marginTop: 20, fontSize: '0.8rem', opacity: 0.6 }}>点击任意位置关闭</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PreviewContext.Provider>
   )
 }

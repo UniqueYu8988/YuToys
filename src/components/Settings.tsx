@@ -1,14 +1,26 @@
-import React, { useState, useContext } from 'react'
-import { Shield, Bell, Monitor, RefreshCcw, PlayCircle, Heart, MessageCircle, Clock, Github } from 'lucide-react'
+import React, { useState, useContext, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Shield, Bell, Monitor, RefreshCcw, PlayCircle, Heart, MessageCircle, Clock, Github, Sparkles } from 'lucide-react'
 import { PreviewContext } from '../context/PreviewContext'
 import alipayImg from '../assets/alipay.jpg'
 import qqImg from '../assets/qq.png'
 import chimeSound from '../assets/sounds/chime.mp3'
 import { useTaskStore } from '../store'
 
+const FORTUNES = [
+  "【上上签】小羽预感到主人今天运气爆棚喵！抽卡必出虹光，心想事必成喵~ (适宜: 抽卡/表白)",
+  "【大吉】万物可爱喵！今天适合出门走走，或者开启一段新的学习计划喵~ (适宜: 出行/阅读)",
+  "【中吉】平稳即是大福喵。小羽建议主人今天适合喝杯热茶，整理一下桌面喵~ (适宜: 收纳/冥想)",
+  "【吉】猫铃铛响了，是好运在靠近喵！小羽觉得今天宜奖励自己一顿大餐喵~ (适宜: 美食/休息)",
+  "【上吉】锦鲤翻身喵！今天适合向喜欢的人打个招呼，或者开始一项新挑战喵~ (适宜: 沟通/尝试)"
+]
+
 const SettingsPage: React.FC = () => {
   const setPreview = useContext(PreviewContext)
-  const { configFocusMinutes, setConfigFocusMinutes } = useTaskStore()
+  const { 
+    configFocusMinutes, setConfigFocusMinutes, 
+    lastFortuneDate, lastFortuneResult, setFortune 
+  } = useTaskStore()
   
   const [alwaysOnTop, setAlwaysOnTop] = useState(() => JSON.parse(localStorage.getItem('setting_alwaysOnTop') || 'true'))
   const [autoStart, setAutoStart] = useState(() => JSON.parse(localStorage.getItem('setting_autoStart') || 'false'))
@@ -16,6 +28,27 @@ const SettingsPage: React.FC = () => {
   const [skipTaskbar, setSkipTaskbar] = useState(() => JSON.parse(localStorage.getItem('setting_skipTaskbar') || 'false'))
   const [tickingSound, setTickingSound] = useState(() => JSON.parse(localStorage.getItem('setting_tickingSound') || 'false'))
   const [resetStep, setResetStep] = useState(0)
+
+  const isFortuneDrawnToday = useMemo(() => {
+    const today = new Date().toISOString().split('T')[0]
+    return lastFortuneDate === today
+  }, [lastFortuneDate])
+
+  const handleDrawFortune = () => {
+    if (isFortuneDrawnToday) {
+      window.electronAPI?.showNotification({ 
+        title: '小羽的温馨提示', 
+        body: '主人今天已经抽过签了喵，贪心的话好运会溜走喔~' 
+      })
+      return
+    }
+    const result = FORTUNES[Math.floor(Math.random() * FORTUNES.length)]
+    setFortune(result)
+    window.electronAPI?.showNotification({ 
+      title: '🎋 新春测运势', 
+      body: result 
+    })
+  }
 
   const toggleOnTop = () => {
     const newVal = !alwaysOnTop
@@ -53,14 +86,12 @@ const SettingsPage: React.FC = () => {
   const testHourly = () => {
     const now = new Date()
     const timeStr = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false })
-    
-    // 使用本地音效测试
     const audio = new Audio(chimeSound)
     audio.play().catch(e => console.error('Audio play failed', e))
 
     window.electronAPI?.showNotification({ 
       title: 'YuToys 报时测试', 
-      body: `当前系统时间: ${timeStr}` 
+      body: `主人，现在是 ${timeStr} 喵，YuToys 运行正常~` 
     })
   }
 
@@ -81,7 +112,17 @@ const SettingsPage: React.FC = () => {
 
   return (
     <div className="page">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <SettingItem icon={<Sparkles size={18} color="#facc15"/>} label="新春测运势">
+          <button 
+            className="text-action-btn" 
+            onClick={handleDrawFortune}
+            style={{ opacity: isFortuneDrawnToday ? 0.5 : 1 }}
+          >
+            {isFortuneDrawnToday ? '已抽签' : '抽签'}
+          </button>
+        </SettingItem>
+
         <SettingItem icon={<Shield size={18} color="#a855f7"/>} label="窗口置顶">
           <div className={`native-toggle ${alwaysOnTop ? 'on' : ''}`} onClick={toggleOnTop}><div className="thumb"/></div>
         </SettingItem>
@@ -130,6 +171,20 @@ const SettingsPage: React.FC = () => {
           <button className="text-action-btn" onClick={() => window.electronAPI?.openExternal('https://github.com/UniqueYu8988/YuToys')}>Star</button>
         </SettingItem>
       </div>
+
+      {isFortuneDrawnToday && lastFortuneResult && (
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{ 
+            marginTop: 12, padding: '10px 14px', borderRadius: 12, 
+            background: 'rgba(250, 204, 21, 0.1)', border: '1px solid rgba(250, 204, 21, 0.2)',
+            fontSize: '0.75rem', color: '#fef08a', lineHeight: 1.5
+          }}
+        >
+          {lastFortuneResult}
+        </motion.div>
+      )}
 
       <div style={{ marginTop: 'auto', paddingBottom: 2 }}>
         <div className="glass-card danger-btn" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 16px' }}>

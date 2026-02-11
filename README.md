@@ -1,61 +1,83 @@
-# 🏆 YuToys - 极致视觉桌面助手
+# 💜 YuToys - 小羽桌面助理
 
-![YuToys Badge](https://img.shields.io/badge/YuToys-v1.4.8-blueviolet?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Stable-success?style=for-the-badge)
-![UI](https://img.shields.io/badge/UI-Glassmorphism-purple?style=for-the-badge)
+![YuToys Badge](https://img.shields.io/badge/YuToys-v1.6.1-blueviolet?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Perfect-success?style=for-the-badge)
+![UI](https://img.shields.io/badge/UI-Modern_Glassmorphism-purple?style=for-the-badge)
 
-**YuToys** 诞生于对“工具美学”的执着追求。它不仅是一个多功能助手，更是一件融合了玻璃拟态艺术与沉浸式交互的桌面数字艺术品。在 V1.4.x 系列更新中，我们引入了动态猫娘助理与电影级动效逻辑，让每一次交互都充满质感。
-
----
-
-## 📽️ 沉浸式功能巡礼 (Feature Highlights)
-
-### 🐈 动态猫娘助理 (NEW!)
-
-- **灵魂速递**：在统计板块实时为您反馈当前的专注状态。
-- **等速算法**：V1.4.8 专属等速跑马灯，根据文字长度动态调整语速，阅读体验极佳。
-- **入场即定**：单次入场锁定对话，拒绝闪烁与跳变，营建沉浸式交流空间。
-
-### 📝 灵动任务管理
-
-- **0.5s 高级淡入**：V1.4.6 引入的厚重感阶梯动效，让任务呈现如电影般优雅。
-- **无感交互**：双击编辑，原地保存，支持全屏烟花庆贺任务达成。
-
-### ⏳ 深度专注空间
-
-- **物理呼吸感**：重绘了计时器圆环，支持 1-99 分钟自定义，计时结束自动触发全屏烟花及系统级通知。
-
-### 📊 极致统计看板
-
-- **Flex 架构防遮挡**：V1.4.8 全面升级 Flex 垂直流布局。标题栏、内容器、导航栏物理隔离，彻底根除所有分辨率下的内容遮挡问题。
+**YuToys** 不仅仅是一款桌面工具，它是您的私人数字化陪伴者 —— **小羽**。
+诞生于对“工具温情化”与“极致视觉”的执着追求，小羽将陪伴您划过每一个专注的时刻，见证每一项任务的达成。
 
 ---
 
-## 🛡️ 专业级打磨 (Technical Polish)
+## ✨ 核心特色巡礼 (Feature Highlights)
 
-- ⚡ **内存冻结技术**：采用 React.lazy 与 Suspense 异步加载非核心模块，将运行内存占用压至极限。
-- 📐 **架构正义**：全量迁移至 Flex 垂直流布局，彻底根除 `position: absolute` 导致的布局重叠阴影。
-- 🔔 **品牌化通知**：精准适配 Windows 原生通知中心，包括整点报时与饮水提醒。
-- 💾 **本地持久化**：基于 JSON 的稳健数据存取，支持一键重置。
+### 🎬 仪式感入场：小羽启动动画
+
+每一次开启，都是一次庄重的会面。小羽专属的 **SplashScreen** 采用电影级呼吸灯效，在紫色星尘中为您拉开高效一天的序幕。
+
+> “主人，小羽已经为您擦净桌面，准备好开始工作喵~”
+
+### 📝 灵动任务管理 (Staggered Tasks)
+
+- **电影级动效**：采用 0.5s 阶梯式淡入动效，让任务列表呈现如流水般自然。
+- **成就庆典**：每当您划掉一项任务，全屏烟花礼赞将为您绽放，让每一次微小的成功都充满仪式感。
+- **无感编辑**：极致简约的交互逻辑，双击即修，失焦即存。
+
+### ⏳ 沉浸式专注空间 (Deep Focus)
+
+- **动态光环计时**：可视化倒计时圆环，支持 1-99 分钟自定义设置。
+- **专注反馈**：计时结束自动触发系统级温情通知，陪伴您劳逸结合。
+
+### 📊 呵护提醒与全量统计 (Smart Notifications)
+
+- **小羽呵护**：
+  - **整点报时**：温馨的报时，提醒主人时光的流逝。
+  - **饮水养成**：精准的时间频率算法，提醒主人补充水分，关爱身体。
+- **极致统计**：四维看板实时记录“达成目标”、“专注时长”、“累计饮水”与“运行时间”。
+
+### 🧧 新春特供：喵系测运势
+
+集成在设置面板中的“新春签筒”，每天可向小羽抽取一次今日运势。结果均为上上签/大吉等吉祥语，并附带每日宜忌，为主人带去整天的好运喵！
 
 ---
 
-## 🛠️ 技术栈 (Tech Stack)
+## 🏗️ 技术底座 (Technical Architecture)
 
-- **前端框架**: React 19 + TypeScript
-- **状态管理**: Zustand
-- **动效引擎**: Framer Motion + Canvas Confetti
-- **底层架构**: Electron 40 + Vite
+YuToys 采用了前沿的桌面开发技术栈，确保丝滑体验与极低开销并存：
 
----
-
-## 📖 开发者资源
-
-- **[KNOWLEDGE_BASE.md](./KNOWLEDGE_BASE.md)**：记录了本项目所有的“黄金提示词”、避坑指南以及视觉资产参数。
+- **核心架构**: [Electron](https://www.electronjs.org/) + [Vite](https://vitejs.dev/)
+- **界面逻辑**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **动效灵魂**: [Framer Motion](https://www.framer.com/motion/) + [Canvas Confetti](https://www.npmjs.com/package/canvas-confetti)
+- **状态管理**: [Zustand](https://zustand-demo.pmnd.rs/) (支持数据本地持久化)
 
 ---
 
-> [!IMPORTANT]
-> **设计师寄语**：好的工具应如同呼吸般自然。我们调教了每一帧的物理摩擦与阻尼，只为在您的桌面上营建一处宁静的专注之所。
+## 🛠️ 开发者起步 (Quick Start)
 
-**YuToys 愿每一份专注，都被温柔以待。💜喵～**
+如果您希望在本地进行二次开发或构建：
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 打包为可执行文件 (EXE)
+npm run build
+```
+
+---
+
+## 📖 审美与复盘
+
+YuToys 的每一处阻尼、每一格阴影都经过精心调教。如果您对我们的视觉参数或开发细节感兴趣，请移步：
+
+- **[KNOWLEDGE_BASE.md](./KNOWLEDGE_BASE.md)**：记录了本项目的黄金提示词、审美资产与踩坑指南。
+
+---
+
+> [!TIP]
+> **小羽寄语**：好的工具应如同空气般自然，又如同挚友般温暖。愿 YuToys 的陪伴能让您的专注不再孤独。
+>
+> **YuToys - 愿每一份专注，都被温柔以待。💜喵～**

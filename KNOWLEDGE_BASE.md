@@ -1,4 +1,4 @@
-# 🧠 YuToys 核心知识与审美复盘 (V1.4.6)
+# 🧠 YuToys 核心知识与审美复盘 (V1.6.1 完美版)
 
 ## 🏆 黄金提示词 (Prompt Templates)
 
@@ -16,17 +16,16 @@
 ## ⚠️ 踩坑手册 (Pitfall Guide)
 
 1.  **嵌套滚动冲突**：在 Electron 的透明小窗口中，如果父级和子级都有 `overflow-y: auto`，会导致触控失灵或高度截断。**准则：统一由最外层的 Content 管理所有垂直滚动。**
-2.  **Framer Motion 跑马灯位移纠偏**：在采用“双内容副本”实现无缝循环时，位移终点必须设定为 `-50%`（即移动一份内容的长度），而非 `-100%`。设定为 `-100%` 会导致动画速度翻倍并在复位时产生视觉闪烁。
-3.  **闭包与实时状态**：在 `setInterval` 中直接读取 Store 变量会拿到旧值。必须通过 `useTaskStore.getState()` 实时抓取，才能让滴答声与倒计时绝对同步。
+2.  **Electron 通知品牌化 (AppUserModelId)**：Windows 通知顶部的标识符是由 `app.setAppUserModelId` 决定的。将包名修改为品牌名 `YuToys`，可以大幅提升专有感。
+3.  **每日限额逻辑实现 (Daily Lock)**：通过存储 `lastActionDate` (ISO 字符串) 并与当前日期进行比对，可以轻松实现“每日仅限一次”的功能（如新春抽签），无需后端数据库。
+4.  **组件式启动动画 (Splash Screen)**：在主应用掛载时，通过 `showSplash` 状态 + `useEffect` 定时器，并配合 `AnimatePresence` 的 `exit` 动画，可以打造出电影质感的开机仪式感。副标题使用 `fontWeight: 700` 可以显著增强品牌稳定感。
+5.  **负空间排版美学 (Breathing Space)**：在功能密集的设置页中，手动增加纵向 `gap` 或为动态卡片留出 `margin-bottom`，是为了让界面“呼吸”。构图的美感往往来自于留白，而非填充。
+6.  **自动化交付 (CI/CD Lite)**：通过简单的 `.bat` 脚本封装 `git` 流程，可以极大地降低非专业用户的代码交付门槛，提升项目的完整生命周期管理。
+7.  **闭包与实时状态**：
+    在 `setInterval` 中直接读取 Store 变量会拿到旧值。必须通过 `useTaskStore.getState()` 实时抓取，才能让滴答声与倒计时绝对同步。
 
 ## 🎨 审美资产 (Design Assets)
 
-- **核心色彩**：
-  - 主题紫 (Accent): `#a855f7`
-  - 背景深 (Dark): `rgba(10, 10, 15, 0.9)` (0.9 保证了毛玻璃的厚重感)
-- **动效参数**：
-  - 列表入场：`duration: 0.5, delay: 0.1, ease: "easeOut"` (V1.4.6 质感强化)
-  - 切页动画：`initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.1 }`
 - **玻璃质感**：
   - `backdrop-filter: blur(40px)` (这是打造极致朦胧感的黄金参数)
 

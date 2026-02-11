@@ -4,7 +4,7 @@ import fs from 'fs'
 
 // --- 身份与持久化同步核心配置 ---
 const APP_NAME = 'YuToys'
-const APP_ID = 'com.yu.yutoys'
+const APP_ID = 'YuToys'
 
 // 强制统一应用名称与 AppID，确保 .bat 与 .exe 共享 AppData 目录
 app.name = APP_NAME
