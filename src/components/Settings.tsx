@@ -23,7 +23,10 @@ const SettingsPage: React.FC = () => {
   } = useTaskStore()
   
   const [alwaysOnTop, setAlwaysOnTop] = useState(() => JSON.parse(localStorage.getItem('setting_alwaysOnTop') || 'true'))
-  const [autoStart, setAutoStart] = useState(() => JSON.parse(localStorage.getItem('setting_autoStart') || 'false'))
+  const [autoStart, setAutoStart] = useState(() => {
+    // 强制默认关闭开机自启，由主人手动开启以确保路径注册正确喵
+    return JSON.parse(localStorage.getItem('setting_autoStart') || 'false')
+  })
   const [hourlyChime, setHourlyChime] = useState(() => JSON.parse(localStorage.getItem('setting_hourlyChime') || 'true'))
   const [skipTaskbar, setSkipTaskbar] = useState(() => JSON.parse(localStorage.getItem('setting_skipTaskbar') || 'false'))
   const [tickingSound, setTickingSound] = useState(() => JSON.parse(localStorage.getItem('setting_tickingSound') || 'false'))
