@@ -1,6 +1,6 @@
 # 💜 YuToys - 小羽桌面助理
 
-![YuToys Badge](https://img.shields.io/badge/YuToys-v2.0.1-blueviolet?style=for-the-badge)
+![YuToys Badge](https://img.shields.io/badge/YuToys-v2.0.2-blueviolet?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Perfect-success?style=for-the-badge)
 ![UI](https://img.shields.io/badge/UI-Modern_Glassmorphism-purple?style=for-the-badge)
 
@@ -74,10 +74,6 @@
   - **整点报时**：温馨提醒时光流逝。
   - **开机自启**：2.0.1 已深度适配 Portable 路径识别，一键入场。
   - **置顶/通知**：支持窗口置顶与静默通知，不干扰主人的专注。
-
-|            🎋 新春测运势             |              🔔 整点报时测试              |               💬 温情通知反馈               |
-| :----------------------------------: | :---------------------------------------: | :-----------------------------------------: |
-| ![测运势](./public/demo/fortune.gif) | ![报时测试](./public/demo/chime_test.gif) | ![通知反馈](./public/demo/notification.gif) |
 
 ---
 

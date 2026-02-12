@@ -129,18 +129,16 @@ export const useTaskStore = create<TaskState>()(
           lastFortuneDate: new Date().toISOString().split("T")[0],
         }),
       checkDailyReset: () => {
-        const today = new Date().toISOString().split("T")[0];
-        const { lastDailyReset } = get();
+        const today = new Date().toISOString().split('T')[0]
+        const { lastDailyReset } = get()
         if (lastDailyReset !== today) {
           set({
-            focusTime: 0,
-            waterIntake: 0,
-            waterCups: 0,
-            lastDailyReset: today,
-          });
-          console.log("YuToys: 新的一天开始啦，数据已重置喵！💜");
+            waterCups: 0, // 仅重置每日饮水任务进度
+            lastDailyReset: today
+          })
+          console.log('YuToys: 新的一天开始啦，饮水任务已重置喵！💜')
         }
-      },
+      }
     }),
     {
       name: "yutoys-storage-v5",
