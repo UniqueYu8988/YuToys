@@ -44,6 +44,12 @@ function App() {
   const { timeLeft, isActive, setIsActive, setTimeLeft, configFocusMinutes, totalRunMinutes } = useTaskStore()
   const tick = useTaskStore(state => state.tick)
   const addRunTime = useTaskStore(state => state.addRunTime)
+  const checkDailyReset = useTaskStore(state => state.checkDailyReset)
+
+  // 跨天数据重置检测 (V2.0.2)
+  useEffect(() => {
+    checkDailyReset()
+  }, [checkDailyReset])
 
   // 音频引擎单例化 (V1.4.1 性能优化)
   const successAudio = React.useMemo(() => new Audio(successSound), [])
@@ -83,6 +89,7 @@ function App() {
     let seconds = 0
     const timer = setInterval(() => {
       tick()
+      checkDailyReset() // 持续检测，支持跨天不关机自动重置
       seconds++
 
       // 滴答音效 (V1.4 修复闭包同步)
