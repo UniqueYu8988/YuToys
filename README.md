@@ -1,6 +1,6 @@
 # 💜 YuToys - 小羽桌面助理
 
-![YuToys Badge](https://img.shields.io/badge/YuToys-v2.0.2-blueviolet?style=for-the-badge)
+![YuToys Badge](https://img.shields.io/badge/YuToys-v2.0.4-blueviolet?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Perfect-success?style=for-the-badge)
 ![UI](https://img.shields.io/badge/UI-Modern_Glassmorphism-purple?style=for-the-badge)
 
