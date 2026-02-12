@@ -1,6 +1,6 @@
 {
   "name": "yutoys",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "main": "dist-electron/main.js",
   "description": "YuToys - 小羽桌面助理",
   "author": "Yu",
@@ -39,7 +39,8 @@
     "files": [
       "dist",
       "dist-electron",
-      "public"
+      "public",
+      "!public/demo"
     ],
     "win": {
       "icon": "public/icon.ico",
@@ -53,6 +54,6 @@
       ]
     },
     "asar": true,
-    "compression": "store"
+    "compression": "maximum"
   }
 }
