@@ -1,4 +1,4 @@
-# 🧠 YuToys 核心知识与审美复盘 (V1.6.1 完美版)
+# 🧠 YuToys 核心知识与审美复盘 (V2.0.5 巅峰版)
 
 ## 🏆 黄金提示词 (Prompt Templates)
 
@@ -23,6 +23,8 @@
 6.  **自动化交付 (CI/CD Lite)**：通过简单的 `.bat` 脚本封装 `git` 流程，可以极大地降低非专业用户的代码交付门槛，提升项目的完整生命周期管理。
 7.  **闭包与实时状态**：
     在 `setInterval` 中直接读取 Store 变量会拿到旧值。必须通过 `useTaskStore.getState()` 实时抓取，才能让滴答声与倒计时绝对同步。
+8.  **多屏下的“窗口救助”逻辑 (Window Rescue)**：
+    当用户断开副屏后，窗口坐标可能残留在不可见区域。通过 `screen.getAllDisplays()` 遍历当前所有显示器范围，校验坐标点是否在任何一个 `bounds` 内。若失联，强制重置坐标（`undefined`）即可让 Electron 自动找回主人。
 
 ## 🎨 审美资产 (Design Assets)
 

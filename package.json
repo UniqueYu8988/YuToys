@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
+    "build:all": "npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -52,6 +53,15 @@
           ]
         }
       ]
+    },
+    "mac": {
+      "icon": "public/icon.png",
+      "target": [
+        "dmg"
+      ]
+    },
+    "dmg": {
+      "artifactName": "YuToys-Mac-${version}.dmg"
     },
     "asar": true,
     "compression": "maximum"

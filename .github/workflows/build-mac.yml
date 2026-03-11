@@ -1,0 +1,31 @@
+name: 🍎 YuToys Mac 云端总装线
+
+on:
+  workflow_dispatch: # 主理人专属的手动触发魔法按钮！
+
+jobs:
+  build-mac:
+    runs-on: macos-latest # 免费召唤一台最新版的云端苹果电脑
+
+    steps:
+      - name: 📥 提取主理人源代码 (Checkout)
+        uses: actions/checkout@v4
+
+      - name: 🟢 召唤 Node.js 前端机甲 (Setup Node)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 📦 安装核心依赖 (Install NPM Packages)
+        run: npm install
+
+      - name: 🚀 执行终极封装口令 (Build Electron App)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build:all
+
+      - name: 🎁 提取 Mac 专属安装包 (Upload Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: YuToys-Mac-DMG # 最终下载包的名字
+          path: release/*.dmg # Electron-builder 在 Mac 上生成的镜像文件

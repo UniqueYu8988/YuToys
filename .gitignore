@@ -12,6 +12,9 @@ release/
 *.exe
 *.zip
 *.7z
+*.app
+*.dmg
+build/
 
 # IDE
 .vscode/
