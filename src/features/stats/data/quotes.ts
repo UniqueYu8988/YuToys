@@ -1,23 +1,22 @@
-import React from 'react'
-import { useTaskStore } from '../store'
-import { Target, Clock, Droplets, Activity } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+export type QuoteResolver = string | ((taskCount: number) => string);
 
+export interface QuoteEntry {
+  condition: (taskCount: number, runMinutes: number, streakDays: number) => boolean;
+  text: QuoteResolver;
+}
 
-
-// --- 100+ 小羽语料库静态资产 (V1.5.1 重命名) ---
-const QUOTE_LIBRARY = [
-  { condition: (tc: number) => tc === 0, text: "主人还没开始动笔吗？喵~ 小羽已经把桌子擦干净等您啦！(=^.^=)" },
-  { condition: (tc: number) => tc > 0, text: (tc: number) => `主人今天已经划掉 ${tc} 个目标了呀，小羽觉得您真的超级厉害呢！喵~ (ฅ>ω<*ฅ)` },
-  { condition: (tc: number) => tc > 3, text: "喵呜！主人今天的效率快赶上抓鱼的小羽了呢！继续保持哦~ (๑^◡^๑)" },
-  { condition: (tc: number) => tc > 7, text: "主人简直是小羽的超级英雄！这么多任务都搞定了，想要什么奖励喵？(///▽///)" },
-  { condition: (tc: number) => tc > 12, text: "天呐！主人是打怪兽去了吗？完成了这么多任务，快让小羽帮您揉揉肩~ (๑•. •๑)" },
-  { condition: (tc: number, rt: number) => tc === 0 && rt > 60, text: "主人已经在电脑前坐好久了，一个任务都没做，是在偷偷想小羽吗？(｡•́︿•̀｡)" },
+export const QUOTE_LIBRARY: QuoteEntry[] = [
+  { condition: (tc) => tc === 0, text: "主人还没开始动笔吗？喵~ 小羽已经把桌子擦干净等您啦！(=^.^=)" },
+  { condition: (tc) => tc > 0, text: (tc) => `主人今天已经划掉 ${tc} 个目标了呀，小羽觉得您真的超级厉害呢！喵~ (ฅ>ω<*ฅ)` },
+  { condition: (tc) => tc > 3, text: "喵呜！主人今天的效率快赶上抓鱼的小羽了呢！继续保持哦~ (๑^◡^๑)" },
+  { condition: (tc) => tc > 7, text: "主人简直是小羽的超级英雄！这么多任务都搞定了，想要什么奖励喵？(///▽///)" },
+  { condition: (tc) => tc > 12, text: "天呐！主人是打怪兽去了吗？完成了这么多任务，快让小羽帮您揉揉肩~ (๑•. •๑)" },
+  { condition: (tc, rt) => tc === 0 && rt > 60, text: "主人已经在电脑前坐好久了，一个任务都没做，是在偷偷想小羽吗？(｡•́︿•̀｡)" },
   { condition: () => true, text: "不管目标大小，只要在前进就是最棒的主人哦！喵~" },
   { condition: () => true, text: "每一个对号都是主人努力过的证明，小羽会帮主人好好存着的！" },
-  { condition: (tc: number) => tc === 1, text: "主人迈出了今天的第一步呢！虽然只有一步，但意义非凡喵！" },
-  { condition: (tc: number) => tc === 6, text: "六六大顺！主人今天的工作运势简直旺到飞机喵~ (๑^◡^๑)" },
-  { condition: (tc: number) => tc > 20, text: "主人... 您该不会是机器人吧？这种工作量，小羽的处理器都要过热了喵！" },
+  { condition: (tc) => tc === 1, text: "主人迈出了今天的第一步呢！虽然只有一步，但意义非凡喵！" },
+  { condition: (tc) => tc === 6, text: "六六大顺！主人今天的工作运势简直旺到飞机喵~ (๑^◡^๑)" },
+  { condition: (tc) => tc > 20, text: "主人... 您该不会是机器人吧？这种工作量，小羽的处理器都要过热了喵！" },
   { condition: () => true, text: "主人，完成任务后的那一刻，是不是感觉整个人都变轻了呢？" },
   { condition: () => true, text: "记得把最难的任务放在最前面哦，小羽会给主人加油打气的！" },
   { condition: () => true, text: "主人奋斗的身影，就是世界上最美的风景线喵~" },
@@ -63,7 +62,7 @@ const QUOTE_LIBRARY = [
   { condition: () => new Date().getHours() <= 9, text: "早起的主人最有精神了！小羽已经为您准备好活力 Buff 了喵！(ฅ>ω<*ฅ)" },
   { condition: () => new Date().getHours() >= 22, text: "星星都困得眨眼睛了，主人也快去被窝里躺着吧，晚安喵~" },
   { condition: () => true, text: "今天的风儿，似乎带着主人努力过的香气呢~" },
-  { condition: (tc: number, rt: number, wc: number) => wc < 2, text: "主人的杯子是不是空空的啦？快去倒杯水吧，小羽想看主人精神抖擞的样子~ 💧" },
+  { condition: (_, __, streakDays) => streakDays < 2, text: "新的节奏才刚刚起步喵，主人今天也要把每日任务稳稳接住哦！" },
   { condition: () => true, text: "主人，坐了这么久，腰酸不酸？快站起来像猫咪一样伸个腰吧！" },
   { condition: () => new Date().getHours() === 12, text: "主人，到午饭时间啦！今天的炸鱼薯条... 诶不对，那是小羽的午餐喵！" },
   { condition: () => true, text: "主人，长时间看屏幕眼睛会干涩的，试着闭上眼，在心里默念三遍‘我最爱小羽’试试？" },
@@ -96,83 +95,17 @@ const QUOTE_LIBRARY = [
   { condition: () => true, text: "别让烦恼偷走了主人的专注。深呼吸，重新聚焦喵~" },
   { condition: () => true, text: "主人的梦想虽远，但只要每秒都在跑，迟早会抓到的喵！" },
   { condition: () => true, text: "主人，世界很大，小羽只想在这一方天地里，见证您所有的辉煌！" },
-  { condition: () => true, text: "愿主人的每一天，都像猫罐头一样，充实、美味且充满期待喵！" }
-]
+  { condition: () => true, text: "愿主人的每一天，都像猫罐头一样，充实、美味且充满期待喵！" },
+];
 
-const Stats: React.FC = () => {
-  const { tasks, focusTime, totalRunMinutes, waterIntake } = useTaskStore()
-  const cumulativeCups = Math.floor((waterIntake || 0) / 250)
-
-  // 使用 useState 锁定本次入场时的对话，解决频繁跳变问题 (V1.5.1 重命名变量)
-  const [xiaoYuQuote] = React.useState(() => {
-    const tc = tasks.filter(t => t.completed).length
-    const rt = totalRunMinutes || 0
-    const wc = cumulativeCups
-    const filtered = QUOTE_LIBRARY.filter(q => q.condition(tc, rt, wc))
-    const raw = filtered[Math.floor(Math.random() * filtered.length)].text
-    return typeof raw === 'function' ? raw(tc) : raw
-  })
-
-  // V1.4.8: 动态计算时长，确保文字无论长短语速一致 (约为 4 字符/秒)
-  const marqueeDuration = React.useMemo(() => {
-    return Math.max(8, xiaoYuQuote.length * 0.25) 
-  }, [xiaoYuQuote])
-
-  const items = [
-    { className: 'tasks', icon: <Target size={22}/>, label: '达成目标', val: tasks.filter(t => t.completed).length, unit: '项' },
-    { className: 'focus', icon: <Clock size={22}/>, label: '专注时长', val: focusTime || 0, unit: '分' },
-    { className: 'water', icon: <Droplets size={22}/>, label: '累计饮水', val: cumulativeCups, unit: '杯' },
-    { className: 'run', icon: <Activity size={22}/>, label: '软件运行', val: totalRunMinutes || 0, unit: '分' },
-  ]
-
-  return (
-    <div className="page no-scroll">
-      <div className="stats-grid">
-        {items.map((it, i) => (
-          <motion.div 
-            key={i} 
-            className={`stat-card ${it.className}`} 
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ delay: i * 0.05 }}
-          >
-            <div className="stat-icon">{it.icon}</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <span className="stat-val">{it.val} <span style={{ fontSize: '0.8rem', fontWeight: 400, opacity: 0.6 }}>{it.unit}</span></span>
-              <span className="stat-label">{it.label}</span>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-      <div className="glass-card" style={{ marginTop: 16, padding: '14px', display: 'flex', alignItems: 'center', gap: 12, borderRadius: 20, overflow: 'hidden', position: 'relative' }}>
-        <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#a855f7', boxShadow: '0 0 10px #a855f7', flexShrink: 0, zIndex: 10, position: 'relative' }} />
-        
-        <div className="marquee-container" style={{ flex: 1, overflow: 'hidden', position: 'relative', height: '1.25rem' }}>
-          <motion.div
-            key={xiaoYuQuote}
-            // V1.4.8: 动态等速循环逻辑
-            animate={{ x: [0, "-50%"] }}
-            transition={{ 
-              duration: marqueeDuration, 
-              ease: "linear",
-              repeat: Infinity,
-            }}
-            style={{ 
-              position: 'absolute',
-              whiteSpace: 'nowrap',
-              fontSize: '0.75rem', 
-              opacity: 0.8,
-              display: 'flex',
-              paddingLeft: '0'
-            }}
-          >
-            <span style={{ paddingRight: '100px' }}>{xiaoYuQuote}</span>
-            <span style={{ paddingRight: '100px' }}>{xiaoYuQuote}</span>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default Stats
+export const getRandomQuote = (
+  taskCount: number,
+  runMinutes: number,
+  streakDays: number,
+) => {
+  const filtered = QUOTE_LIBRARY.filter((quote) =>
+    quote.condition(taskCount, runMinutes, streakDays),
+  );
+  const raw = filtered[Math.floor(Math.random() * filtered.length)].text;
+  return typeof raw === "function" ? raw(taskCount) : raw;
+};

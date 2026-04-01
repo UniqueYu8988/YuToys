@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
+    "build:mac": "tsc && vite build && electron-builder --mac dmg --publish never",
+    "build:win": "tsc && vite build && electron-builder --win portable --publish never",
     "build:all": "npm run build",
     "preview": "vite preview"
   },

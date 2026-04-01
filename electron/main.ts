@@ -14,23 +14,54 @@ import fs from "fs";
 // --- 身份与持久化同步核心配置 ---
 const APP_NAME = "YuToys";
 const APP_ID = "YuToys";
+const isMac = process.platform === "darwin";
+const isWindows = process.platform === "win32";
 
 // 强制统一应用名称与 AppID，确保 .bat 与 .exe 共享 AppData 目录
 app.name = APP_NAME;
-app.setAppUserModelId(APP_ID);
+if (isWindows) {
+  app.setAppUserModelId(APP_ID);
+}
 
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 
-// 使用标准化的路径获取方式
-const getResourcePath = (relativePath: string) => {
-  const isDev = !app.isPackaged;
-  if (isDev) {
-    return path.join(app.getAppPath(), "public", relativePath);
+const findResourcePath = (relativePaths: string[]) => {
+  const searchRoots = [app.getAppPath(), process.resourcesPath];
+
+  for (const root of searchRoots) {
+    for (const relativePath of relativePaths) {
+      const candidate = path.join(root, "public", relativePath);
+      if (fs.existsSync(candidate)) {
+        return candidate;
+      }
+    }
   }
-  // 在打包环境下，资源位于 asar 内部的 public 目录
-  return path.join(app.getAppPath(), "public", relativePath);
+
+  return null;
 };
+
+const getTrayImage = () => {
+  const trayPath = isMac
+    ? findResourcePath(["tray.png", "iconTemplate.png", "icon.png"])
+    : findResourcePath(["icon.ico", "icon.png"]);
+
+  if (!trayPath) {
+    return nativeImage.createEmpty();
+  }
+
+  const image = nativeImage.createFromPath(trayPath);
+  if (isMac) {
+    image.setTemplateImage(true);
+  }
+  return image;
+};
+
+const getWindowIconPath = () =>
+  findResourcePath(isWindows ? ["icon.ico", "icon.png"] : ["icon.png"]);
+
+const getNotificationIconPath = () =>
+  isWindows ? findResourcePath(["icon.ico", "icon.png"]) : undefined;
 
 const configPath = path.join(app.getPath("userData"), "window-state.json");
 
@@ -69,21 +100,7 @@ if (!gotTheLock) {
   });
 
   function createTray() {
-    // 采用原生 .ico 适配 Windows 托盘，这是解决图标消失的最稳妥路径
-    const iconPath = getResourcePath("icon.ico");
-
-    if (fs.existsSync(iconPath)) {
-      const icon = nativeImage.createFromPath(iconPath);
-      tray = new Tray(icon);
-    } else {
-      // 备选路径搜索
-      const fallbackPath = path.join(process.resourcesPath, "public/icon.ico");
-      if (fs.existsSync(fallbackPath)) {
-        tray = new Tray(nativeImage.createFromPath(fallbackPath));
-      } else {
-        tray = new Tray(nativeImage.createEmpty());
-      }
-    }
+    tray = new Tray(getTrayImage());
 
     if (tray) {
       const contextMenu = Menu.buildFromTemplate([
@@ -105,7 +122,7 @@ if (!gotTheLock) {
 
   function createWindow() {
     let state = loadWindowState();
-    const appIconPath = getResourcePath("icon.ico");
+    const appIconPath = getWindowIconPath();
 
     // 校验坐标是否在可见范围内 (V2.0.5 防止副屏丢失)
     if (state.x !== undefined && state.y !== undefined) {
@@ -135,7 +152,7 @@ if (!gotTheLock) {
       minHeight: 480,
       maxWidth: 320,
       maxHeight: 480,
-      icon: fs.existsSync(appIconPath) ? appIconPath : undefined,
+      icon: appIconPath || undefined,
       alwaysOnTop: true,
       frame: false,
       transparent: true,
@@ -190,11 +207,11 @@ if (!gotTheLock) {
   });
 
   ipcMain.on("show-notification", (event, { title, body }) => {
-    const iconPath = getResourcePath("icon.ico");
+    const iconPath = getNotificationIconPath();
     new Notification({
       title: title || APP_NAME,
       body,
-      icon: fs.existsSync(iconPath) ? iconPath : undefined,
+      icon: iconPath ?? undefined,
       silent: true,
     }).show();
   });
@@ -202,13 +219,19 @@ if (!gotTheLock) {
   ipcMain.on("set-auto-start", (event, flag) => {
     // 只有在打包环境下才执行真实的快捷启动设置，避免 dev 环境干扰系统列表
     if (app.isPackaged) {
-      // 解决 Portable 引导失效：优先使用原始 EXE 路径，否则指向临时目录会导致重启后找不到文件
-      const exePath =
-        process.env.PORTABLE_EXECUTABLE_FILE || app.getPath("exe");
-      app.setLoginItemSettings({
-        openAtLogin: flag,
-        path: exePath,
-      });
+      if (isWindows) {
+        // 解决 Portable 引导失效：优先使用原始 EXE 路径，否则指向临时目录会导致重启后找不到文件
+        const exePath =
+          process.env.PORTABLE_EXECUTABLE_FILE || app.getPath("exe");
+        app.setLoginItemSettings({
+          openAtLogin: flag,
+          path: exePath,
+        });
+      } else {
+        app.setLoginItemSettings({
+          openAtLogin: flag,
+        });
+      }
     }
   });
 

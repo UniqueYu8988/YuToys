@@ -22,7 +22,8 @@ jobs:
       - name: 🚀 执行终极封装口令 (Build Electron App)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:all
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+        run: npm run build:mac
 
       - name: 🎁 提取 Mac 专属安装包 (Upload Artifact)
         uses: actions/upload-artifact@v4
