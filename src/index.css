@@ -183,12 +183,39 @@ body {
   transition: 0.3s;
 }
 
-.today-hero {
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  background:
-    radial-gradient(circle at top right, rgba(168, 85, 247, 0.2), transparent 35%),
-    rgba(255, 255, 255, 0.03);
+.task-home-page {
+  position: relative;
+  padding-bottom: 76px;
+}
+
+.todo-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.todo-title {
+  margin-top: 4px;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.todo-counter {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.todo-counter span {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.36);
+}
+
+.task-list-viewport-home {
+  padding-bottom: 96px;
 }
 
 .today-hero-label,
@@ -197,40 +224,6 @@ body {
   letter-spacing: 1px;
   color: var(--text-dim);
   text-transform: uppercase;
-}
-
-.today-chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.today-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.72rem;
-}
-
-.task-capture-form {
-  margin-bottom: 10px;
-}
-
-.task-capture-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-}
-
-.task-capture-icon {
-  color: rgba(168, 85, 247, 0.95);
-  flex-shrink: 0;
 }
 
 .task-capture-input {
@@ -256,129 +249,13 @@ body {
   color: rgba(255, 255, 255, 0.28);
 }
 
-.today-focus-card {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 2px 10px;
-}
-
-.today-focus-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.today-focus-text {
-  margin-top: 4px;
-  font-size: 0.82rem;
-  line-height: 1.35;
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.today-focus-linked {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  font-size: 0.68rem;
-  color: rgba(233, 213, 255, 0.8);
-}
-
-.today-preset-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.today-preset-chip {
-  height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.today-preset-chip.active {
-  background: rgba(168, 85, 247, 0.16);
-  border-color: rgba(168, 85, 247, 0.24);
-  color: white;
-}
-
-.today-focus-link-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 30px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(168, 85, 247, 0.22);
-  background: rgba(168, 85, 247, 0.14);
-  color: #f2e8ff;
-  cursor: pointer;
-  font-size: 0.72rem;
-  transition: 0.2s ease;
-}
-
-.today-focus-link-btn.active {
-  background: rgba(99, 102, 241, 0.16);
-  border-color: rgba(99, 102, 241, 0.26);
-}
-
-.today-pin-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 30px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.72);
-  cursor: pointer;
-  font-size: 0.72rem;
-  transition: 0.2s ease;
-}
-
-.today-pin-btn.active {
-  background: rgba(168, 85, 247, 0.16);
-  color: white;
-  border-color: rgba(168, 85, 247, 0.28);
-}
-
-.today-focus-badge {
-  flex-shrink: 0;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.today-section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.today-section-meta {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.42);
-}
-
 .today-task-item {
   background: rgba(255, 255, 255, 0.025);
+}
+
+.today-task-item.selected {
+  border-color: rgba(168, 85, 247, 0.22);
+  background: rgba(168, 85, 247, 0.08);
 }
 
 .today-task-copy {
@@ -386,7 +263,7 @@ body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .today-task-pin-tag {
@@ -394,22 +271,11 @@ body {
   align-items: center;
   gap: 5px;
   width: fit-content;
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
   background: rgba(168, 85, 247, 0.12);
   color: rgba(233, 213, 255, 0.92);
-  font-size: 0.68rem;
-}
-
-.today-task-time-tag {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.68rem;
+  font-size: 0.64rem;
 }
 
 .today-task-actions {
@@ -417,32 +283,6 @@ body {
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-}
-
-.today-task-icon-btn {
-  width: 26px;
-  height: 26px;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.46);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s ease;
-}
-
-.today-task-icon-btn.active {
-  background: rgba(168, 85, 247, 0.16);
-  color: #f5e9ff;
-}
-
-.today-task-icon-btn:hover,
-.today-pin-btn:hover,
-.today-focus-link-btn:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
 }
 
 .timer-focus-card {
@@ -486,6 +326,47 @@ body {
   color: rgba(255, 255, 255, 0.68);
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.timer-preset-card {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+
+.timer-preset-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.timer-preset-current {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.timer-preset-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.timer-preset-chip {
+  flex: 1;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.66);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.timer-preset-chip.active {
+  background: rgba(168, 85, 247, 0.16);
+  border-color: rgba(168, 85, 247, 0.28);
+  color: white;
 }
 
 .today-empty-state {
@@ -699,6 +580,117 @@ body {
   opacity: 0.75;
 }
 
+.todo-floating-shell {
+  position: absolute;
+  right: 16px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.todo-floating-button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.96), rgba(124, 58, 237, 0.96));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-floating-button.open {
+  transform: rotate(45deg);
+}
+
+.todo-quick-panel {
+  width: 240px;
+  padding: 12px;
+}
+
+.todo-quick-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.todo-quick-head span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todo-quick-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.todo-quick-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.todo-quick-btn {
+  flex: 1;
+  height: 34px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.78);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  transition: 0.2s ease;
+}
+
+.todo-quick-btn.primary {
+  background: rgba(168, 85, 247, 0.16);
+  color: white;
+}
+
+.todo-quick-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.todo-quick-links {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.todo-mini-link {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.66);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 /* 统计卡片矩阵 */
 .stats-grid {
   display: grid;
@@ -840,6 +832,68 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.focus-completion-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 180;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(10px);
+}
+
+.focus-completion-dialog {
+  width: 100%;
+  padding: 18px 16px;
+}
+
+.focus-completion-title {
+  margin-top: 4px;
+  font-size: 1rem;
+}
+
+.focus-completion-task {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.focus-completion-copy {
+  margin-top: 8px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.focus-completion-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.focus-completion-actions button {
+  flex: 1;
+  height: 36px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: 0.2s ease;
+}
+
+.focus-completion-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.focus-completion-primary {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.92), rgba(124, 58, 237, 0.92));
+  color: white;
 }
 
 /* 动效 */

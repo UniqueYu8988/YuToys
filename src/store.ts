@@ -46,6 +46,7 @@ interface TaskState extends TimerState {
   tasks: Task[];
   pinnedTaskId: string | null;
   focusTaskId: string | null;
+  focusCompletionTaskId: string | null;
   focusTime: number;
   totalRunMinutes: number;
   settings: AppSettings;
@@ -57,8 +58,10 @@ interface TaskState extends TimerState {
   addTask: (text: string) => void;
   setPinnedTask: (id: string | null) => void;
   setFocusTask: (id: string | null) => void;
+  setFocusCompletionTask: (id: string | null) => void;
   setTaskFocusPreset: (id: string, minutes?: number) => void;
   toggleTask: (id: string) => void;
+  completeTask: (id: string) => void;
   updateTask: (id: string, text: string) => void;
   deleteTask: (id: string) => void;
   addFocusTime: (minutes: number) => void;
@@ -182,6 +185,7 @@ const createInitialData = () => {
     tasks: [] as Task[],
     pinnedTaskId: null as string | null,
     focusTaskId: null as string | null,
+    focusCompletionTaskId: null as string | null,
     focusTime: 0,
     totalRunMinutes: 0,
     settings: createDefaultSettings(),
@@ -239,6 +243,7 @@ export const useTaskStore = create<TaskState>()(
         })),
       setPinnedTask: (id) => set({ pinnedTaskId: id }),
       setFocusTask: (id) => set({ focusTaskId: id }),
+      setFocusCompletionTask: (id) => set({ focusCompletionTaskId: id }),
       setTaskFocusPreset: (id, minutes) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
@@ -268,8 +273,28 @@ export const useTaskStore = create<TaskState>()(
               toggledTask?.completed && state.focusTaskId === id
                 ? null
                 : state.focusTaskId,
+            focusCompletionTaskId:
+              toggledTask?.completed && state.focusCompletionTaskId === id
+                ? null
+                : state.focusCompletionTaskId,
           };
         }),
+      completeTask: (id) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id
+              ? {
+                  ...task,
+                  completed: true,
+                  completedAt: task.completedAt ?? Date.now(),
+                }
+              : task,
+          ),
+          pinnedTaskId: state.pinnedTaskId === id ? null : state.pinnedTaskId,
+          focusTaskId: state.focusTaskId === id ? null : state.focusTaskId,
+          focusCompletionTaskId:
+            state.focusCompletionTaskId === id ? null : state.focusCompletionTaskId,
+        })),
       updateTask: (id, text) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
@@ -281,6 +306,8 @@ export const useTaskStore = create<TaskState>()(
           tasks: state.tasks.filter((task) => task.id !== id),
           pinnedTaskId: state.pinnedTaskId === id ? null : state.pinnedTaskId,
           focusTaskId: state.focusTaskId === id ? null : state.focusTaskId,
+          focusCompletionTaskId:
+            state.focusCompletionTaskId === id ? null : state.focusCompletionTaskId,
         })),
       addFocusTime: (minutes) =>
         set((state) => ({ focusTime: (state.focusTime || 0) + minutes })),

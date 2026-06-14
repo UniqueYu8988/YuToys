@@ -19,6 +19,13 @@ function App() {
   const [previewSrc, setPreviewSrc] = useState<string | null>(null)
   const [showSplash, setShowSplash] = useState(true)
   const checkDailyReset = useTaskStore(state => state.checkDailyReset)
+  const completeTask = useTaskStore(state => state.completeTask)
+  const focusCompletionTaskId = useTaskStore(state => state.focusCompletionTaskId)
+  const setFocusCompletionTask = useTaskStore(state => state.setFocusCompletionTask)
+  const tasks = useTaskStore(state => state.tasks)
+  const focusCompletionTask = tasks.find(
+    task => task.id === focusCompletionTaskId && !task.completed,
+  )
 
   useDesktopSettingsSync()
   useGlobalTicker()
@@ -57,17 +64,19 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="container"
+            className="container app-shell"
           >
             <header className="title-bar">
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.5 }}>YuToys</span>
+              <div className="app-title-wrap">
+                <span className="app-title">YuToys</span>
+              </div>
               <div className="window-controls">
-                <button onClick={() => window.electronAPI?.minimize()}>-</button>
-                <button onClick={() => window.electronAPI?.close()}>×</button>
+                <button className="window-btn" onClick={() => window.electronAPI?.minimize()} type="button">-</button>
+                <button className="window-btn" onClick={() => window.electronAPI?.close()} type="button">×</button>
               </div>
             </header>
             
-            <main className="content">
+            <main className="content app-content">
               <motion.div 
                 key={activeTab}
                 initial={{ opacity: 0.92 }}
@@ -97,8 +106,9 @@ function App() {
               ].map(tab => (
                 <button 
                   key={tab.id}
-                  className={activeTab === tab.id ? 'active' : ''} 
+                  className={`nav-button ${activeTab === tab.id ? 'active' : ''}`} 
                   onClick={() => setActiveTab(tab.id)}
+                  type="button"
                 >
                   {tab.icon}
                 </button>
@@ -106,6 +116,42 @@ function App() {
             </nav>
 
             <AnimatePresence>
+              {focusCompletionTask && (
+                <motion.div
+                  className="focus-completion-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <motion.div
+                    className="glass-card focus-completion-dialog"
+                    initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 12, scale: 0.96 }}
+                  >
+                    <p className="today-section-eyebrow">专注收尾</p>
+                    <h3 className="focus-completion-title">这轮专注结束了</h3>
+                    <p className="focus-completion-task">{focusCompletionTask.text}</p>
+                    <p className="focus-completion-copy">
+                      如果这件事已经推进完成，现在就可以顺手把它收掉。
+                    </p>
+                    <div className="focus-completion-actions">
+                      <button
+                        className="focus-completion-secondary"
+                        onClick={() => setFocusCompletionTask(null)}
+                      >
+                        继续推进
+                      </button>
+                      <button
+                        className="focus-completion-primary"
+                        onClick={() => completeTask(focusCompletionTask.id)}
+                      >
+                        标记完成
+                      </button>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
               {previewSrc && (
                 <motion.div 
                   className="image-overlay"

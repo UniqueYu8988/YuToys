@@ -7,7 +7,7 @@ import { getRandomQuote } from './data/quotes'
 const Stats: React.FC = () => {
   const { tasks, focusTime, totalRunMinutes } = useTaskStore()
   const streak = useTaskStore(selectCurrentDailyTaskStreak)
-  const runHours = ((totalRunMinutes || 0) / 60).toFixed(1)
+  const runHours = Math.floor((totalRunMinutes || 0) / 60)
 
   // 使用 useState 锁定本次入场时的对话，解决频繁跳变问题 (V1.5.1 重命名变量)
   const [xiaoYuQuote] = React.useState(() => {

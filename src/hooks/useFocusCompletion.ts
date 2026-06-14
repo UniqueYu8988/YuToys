@@ -5,9 +5,14 @@ import { useTaskStore } from "../store";
 
 export const useFocusCompletion = () => {
   const configFocusMinutes = useTaskStore((state) => state.configFocusMinutes);
+  const focusTaskId = useTaskStore((state) => state.focusTaskId);
   const isActive = useTaskStore((state) => state.isActive);
+  const setFocusCompletionTask = useTaskStore(
+    (state) => state.setFocusCompletionTask,
+  );
   const setIsActive = useTaskStore((state) => state.setIsActive);
   const setTimeLeft = useTaskStore((state) => state.setTimeLeft);
+  const tasks = useTaskStore((state) => state.tasks);
   const timeLeft = useTaskStore((state) => state.timeLeft);
   const successAudio = useMemo(() => new Audio(successSound), []);
 
@@ -42,13 +47,22 @@ export const useFocusCompletion = () => {
     };
 
     frame();
+    const focusTask = tasks.find(
+      (task) => task.id === focusTaskId && !task.completed,
+    );
+    if (focusTask) {
+      setFocusCompletionTask(focusTask.id);
+    }
     setTimeLeft(configFocusMinutes * 60);
   }, [
     configFocusMinutes,
+    focusTaskId,
     isActive,
+    setFocusCompletionTask,
     setIsActive,
     setTimeLeft,
     successAudio,
+    tasks,
     timeLeft,
   ]);
 };

@@ -1,0 +1,234 @@
+.task-home-page {
+  padding-top: 2px;
+}
+
+.home-header-refined {
+  margin-bottom: 14px;
+}
+
+.todo-title {
+  margin-top: 3px;
+  font-size: 1.28rem;
+  letter-spacing: -0.02em;
+}
+
+.todo-counter-card {
+  min-width: 72px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+  text-align: right;
+}
+
+.todo-counter {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.todo-counter-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.task-list-viewport-home {
+  gap: 10px;
+}
+
+.home-task-row {
+  min-height: 58px;
+  margin-bottom: 10px;
+  padding: 13px 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.028),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+.home-task-row.selected {
+  background:
+    linear-gradient(180deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.08)),
+    rgba(255, 255, 255, 0.03);
+  box-shadow:
+    inset 0 0 0 1px rgba(168, 85, 247, 0.22),
+    0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.home-task-text {
+  line-height: 1.35;
+  font-size: 0.92rem;
+}
+
+.home-task-pin-tag {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.home-empty-state {
+  min-height: 112px;
+  align-items: center;
+}
+
+.todo-floating-shell {
+  right: 14px;
+  bottom: 12px;
+}
+
+.todo-floating-button {
+  width: 48px;
+  height: 48px;
+}
+
+.todo-quick-panel {
+  width: 252px;
+  padding: 14px;
+  border-radius: 22px;
+}
+
+.todo-quick-head {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.todo-quick-form {
+  margin-top: 12px;
+  border-radius: 16px;
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.todo-quick-actions {
+  margin-top: 12px;
+}
+
+.todo-quick-btn {
+  height: 36px;
+  border-radius: 13px;
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.todo-quick-btn.primary {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.22), rgba(124, 58, 237, 0.18));
+  box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.16);
+}
+
+.todo-quick-links {
+  margin-top: 12px;
+}
+
+.todo-mini-link {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+.todo-mini-link:hover,
+.todo-quick-btn:hover:not(:disabled),
+.timer-preset-chip:hover,
+.timer-focus-clear:hover,
+.todo-floating-button:hover {
+  filter: brightness(1.06);
+}
+
+.timer-page {
+  padding-top: 2px;
+}
+
+.timer-focus-card,
+.timer-preset-card {
+  border-radius: 22px;
+}
+
+.timer-focus-card {
+  margin-bottom: 12px;
+}
+
+.timer-focus-copy {
+  min-width: 0;
+}
+
+.timer-focus-text {
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+.timer-preset-row {
+  margin-top: 12px;
+}
+
+.timer-preset-chip {
+  height: 34px;
+  font-weight: 600;
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+}
+
+.timer-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.refined-timer-dial {
+  width: 224px;
+  height: 224px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(168, 85, 247, 0.08), transparent 55%),
+    rgba(255, 255, 255, 0.02);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 18px 50px rgba(0, 0, 0, 0.24);
+}
+
+.timer-center {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.timer-status-row {
+  margin-top: 18px;
+}
+
+.timer-status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.timer-status-chip.active {
+  background: rgba(168, 85, 247, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.timer-stage-caption {
+  margin-top: 18px;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: 0.28em;
+  font-weight: 700;
+  text-align: center;
+}

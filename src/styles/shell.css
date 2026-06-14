@@ -1,0 +1,104 @@
+.container.app-shell {
+  background:
+    radial-gradient(circle at top right, rgba(168, 85, 247, 0.18), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.08), transparent 22%),
+    var(--shell-bg);
+  border: none;
+  box-shadow: var(--shadow-shell);
+  overflow: hidden;
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 18%),
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 42%);
+  pointer-events: none;
+}
+
+.title-bar {
+  padding: 0 14px 0 16px;
+  opacity: 1;
+}
+
+.app-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.58);
+  letter-spacing: 0.02em;
+}
+
+.window-controls {
+  gap: 6px;
+}
+
+.window-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  font-size: 1rem;
+}
+
+.window-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.app-content {
+  padding-bottom: 14px;
+}
+
+.bottom-nav {
+  margin: 0 10px 10px;
+  border: none;
+  border-radius: 18px;
+  background: rgba(6, 6, 10, 0.74);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 8px 26px rgba(0, 0, 0, 0.24);
+}
+
+.nav-button {
+  width: 48px;
+  height: 44px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav button.active {
+  background: rgba(168, 85, 247, 0.12);
+  color: #d8b4fe;
+}
+
+.glass-card,
+.refined-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.02);
+  border: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.045),
+    var(--shadow-panel);
+}
+
+.refined-title {
+  font-weight: 600;
+}
+
+.refined-ghost-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
